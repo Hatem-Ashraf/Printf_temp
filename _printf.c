@@ -31,8 +31,16 @@ int _printf(const char *format, ...)
 {
 	int i, j;
 	st_spec specArr[] = {
+		{"c", pr_char},
+		{"s", pr_str},
+		{"%", pr_perc},
 		{"i", pr_int},
 		{"d", pr_int},
+		{"b", pr_binary},
+		{"o", pr_oct},
+		{"x", pr_hex},
+		{"X", pr_HEX},
+		{"u", pr_unsign},
 		{NULL, NULL}
 	};
 	va_list ap;
@@ -49,7 +57,7 @@ int _printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			j = 0;
-			while (j < 2)
+			while (specArr[j].s)
 			{
 				if (format[i + 1] == *(specArr[j].s))
 					printSize += specArr[j].f(ap), i++;
@@ -60,6 +68,6 @@ int _printf(const char *format, ...)
 			printSize++;
 		}
 		i++;
-	}	
+	}
 	return (printSize);
 }
